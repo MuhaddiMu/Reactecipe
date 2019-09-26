@@ -2,9 +2,8 @@ import React from "react"
 import "./App.css"
 import Form from "./components/Form"
 import Recipes from "./components/Recipes"
-import { BrowserRouter, Route, Switch } from "react-router-dom"
 
-const API_KEY = "d60a27adb9f4294b0d3044ec07285a5e"
+const API_KEY = "c4f5fd7eb6daa62deece925aa42c0a29" //Taken From GitHub
 
 class App extends React.Component {
   state = {
@@ -24,6 +23,19 @@ class App extends React.Component {
 
     this.setState({ Recipes: DATA.recipes })
     console.log(this.state.Recipes)
+  }
+  componentDidMount = () => {
+    if (localStorage.getItem("Recipes") !== null) {
+      const RecipesLocalStorage = localStorage.getItem("Recipes")
+      const Recipes = JSON.parse(RecipesLocalStorage)
+
+      this.setState({ Recipes: Recipes })
+    }
+  }
+
+  componentDidUpdate = () => {
+    const Recipes = JSON.stringify(this.state.Recipes)
+    localStorage.setItem("Recipes", Recipes)
   }
   render() {
     return (
